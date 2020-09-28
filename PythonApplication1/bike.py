@@ -113,11 +113,18 @@ def diffenceLocation(location, date, items):
 
     otherItems = {key: value for key, value in items.items() if key != location}
     for otherLocation, otherItem in otherItems.items():
-        
-        otherDateInfo = next((x for x in otherItem if x["date"] == date), {})
 
+        # 데이터가 조회 안될때 차이도 확인 하고 싶을시 아래 주석 제거
+        # otherDateInfo = next((x for x in otherItem if x["date"] == date), {"casual" : [0], "registered": [0]})
+
+
+        # 데이터가 조회 안될때 차이도 확인 하고 싶을시 아래 주석 추가
+        otherDateInfo = next((x for x in otherItem if x["date"] == date), {"casual" : [0], "registered": [0]})
+
+        # 데이터가 조회 안될때 차이도 확인 하고 싶을시 아래 주석 추가
         if not bool(otherDateInfo):
             continue
+
         otherCasualSum = reduce(lambda x, y : x + y, otherDateInfo["casual"])
         otherRegisteredSum = reduce(lambda x, y : x + y, otherDateInfo["registered"])
 
